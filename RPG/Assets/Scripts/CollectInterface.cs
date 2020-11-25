@@ -28,7 +28,7 @@ public class CollectData
 public enum CollectType
 {
     石头,
-    木材,
+    木头,
     食物,
     药材,
 }

@@ -12,9 +12,10 @@ public class PlayerInteraction : MonoBehaviour
     public Vector3 interactionPosition;
     [Tooltip("检测球半径")]
     public float radius;
+    [Tooltip("背包")]
+    public Box box;
     private ICollect collect;
     private IInteractionInterface interaction;
-    private PlayerMove playerMove;
     private PlayerAnimation playerAnimation;
     private UniversalSlider slider;
     private bool isCollect = false;              // 是否正在采集
@@ -23,7 +24,6 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Start()
     {
-        playerMove = GetComponent<PlayerMove>();
         playerAnimation = GetComponent<PlayerAnimation>();
     }
     void Update()
@@ -46,24 +46,25 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            if(box.gameObject.activeSelf)
+            {
+                box.CloseBox();
+            }
+            else
+            {
+                box.OpenBox();
+            }
+        }
         RayInspect();
     }
 
+    /// <summary>
+    /// 检查是否可以交互
+    /// </summary>
     private void RayInspect()
     {
-        //Ray ray = new Ray(interactionPosition + transform.position, transform.forward);
-        //if (Physics.Raycast(ray, out RaycastHit raycastHit, 5, layer))
-        //{
-        //    interaction = raycastHit.collider.GetComponent<IInteractionInterface>();
-        //    if (interaction != null)
-        //    {
-        //        if (interaction.InteractionType == InteractionType.collect)
-        //        {
-        //            collect = interaction as ICollect;
-        //            HintMessage.Single.ShowMessageText($"{collect.Name}:采集");
-        //        }
-        //    }
-        //}
         RaycastHit[] raycastHit = Physics.SphereCastAll(interactionPosition + transform.position, radius, transform.forward, radius / 2, layer);
         if (raycastHit.Length >= 1)
         {
@@ -86,6 +87,9 @@ public class PlayerInteraction : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 开始采集
+    /// </summary>
     private void StartCollect()
     {
         timeText += Time.deltaTime;
@@ -98,6 +102,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 Instantiate(textObj, canvas).GetComponent<TextShow>()
                 .SetMessageText($"{collectData.collectType}:+{collectNum}");
+                box.AddItem(new ItemData() { number = collectNum, name = collectData.collectType.ToString() });
                 collectNum = 0;
                 timeText = 0;
             }
@@ -106,8 +111,12 @@ public class PlayerInteraction : MonoBehaviour
         {
             FinishCollectInit();
             if (collectNum != 0)
+            {
                 Instantiate(textObj, canvas).GetComponent<TextShow>()
                 .SetMessageText($"{collectData.collectType}:+{collectNum}");
+                box.AddItem(new ItemData() { number = collectNum, name = collectData.collectType.ToString() });
+            }
+                
             collectNum = 0;
         }
         
@@ -115,7 +124,7 @@ public class PlayerInteraction : MonoBehaviour
     private void StartCollectInit()
     {
         isCollect = true;
-        playerMove.isMove = false;
+        PlayerInputManage.single.ForbidMove();
         playerAnimation.Busy();
         slider = Instantiate(ResourcePath.Single.universalSlider, canvas).GetComponent<UniversalSlider>();
     }
@@ -123,7 +132,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         isCollect = false;
         collect = null;
-        playerMove.isMove = true;
+        PlayerInputManage.single.MayMove();
         playerAnimation.CancelBusy();
         Destroy(slider.gameObject);
         slider = null;

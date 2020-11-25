@@ -31,7 +31,7 @@ public class Collect : MonoBehaviour, ICollect
 
     public CollectData GetCollectData(float time)
     {
-        int tempCollectNumber = 0; // 要返回的资源数量
+        int tempCollectNumber; // 要返回的资源数量
         bool isDone = false;
         remainingTime -= time;
         clock += time;
