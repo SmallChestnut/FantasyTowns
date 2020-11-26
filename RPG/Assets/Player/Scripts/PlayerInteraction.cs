@@ -25,6 +25,7 @@ public class PlayerInteraction : MonoBehaviour
     private void Start()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
+        box.gameObject.SetActive(false);
     }
     void Update()
     {
