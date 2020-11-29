@@ -69,6 +69,45 @@ public class Box : MonoBehaviour
         return itemData.number;
     }
 
+    public int GetItem(ItemData itemData)
+    {
+        int itemSum = 0; // 物品的累加
+        List<ArticleUI> temp = new List<ArticleUI>(); // 记录要删除的物品
+        for(int i = 0; i < box.Count; i++)
+        {
+            // 如果需要获取的物品数量足够了就返回不查找
+            if (itemData.number == 0) break;
+            if (itemData.number < 0) throw new Exception();
+
+            if(box[i].itemData.name == itemData.name)
+            {
+                // 如果箱子里的道具比需要的道具还要大就直接取需要的返回
+                if(box[i].itemData.number > itemData.number)
+                {
+                    itemSum += itemData.number;
+                    box[i].itemData.number -= itemData.number;
+                    itemData.number = 0;
+                    box[i].UpdateNumberText();
+                    break;
+                }
+                // 否则需要销毁箱子里这个道具UI并且累加
+                else
+                {
+                    itemSum += box[i].itemData.number;
+                    itemData.number -= box[i].itemData.number;
+                    temp.Add(box[i]); // 该物品的数量用完了，记录一下
+                }
+            }
+        }
+        foreach(var x in temp)
+        {
+            box.Remove(x);
+            x.ArticleGrid.Article = null; // 让格子取消对物品的引用
+            Destroy(x.gameObject);
+        }
+        return itemSum;
+    }
+
     public void OpenBox()
     {
         Cursor.lockState = CursorLockMode.None;

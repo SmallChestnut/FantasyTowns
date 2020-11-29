@@ -8,6 +8,12 @@ public interface ICollect : IInteractionInterface
     CollectData GetCollectData(float time);
 }
 
+public interface IBulid : IInteractionInterface
+{
+    void BulidHouse(Box box);
+    void DestroyHouse();
+}
+
 public class CollectData
 {
     public CollectType collectType; // 资源类型
@@ -30,5 +36,5 @@ public enum CollectType
     石头,
     木头,
     食物,
-    药材,
+    回复药,
 }

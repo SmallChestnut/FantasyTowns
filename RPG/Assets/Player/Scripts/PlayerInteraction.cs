@@ -15,6 +15,7 @@ public class PlayerInteraction : MonoBehaviour
     [Tooltip("背包")]
     public Box box;
     private ICollect collect;
+    private IBulid bulid;
     private IInteractionInterface interaction;
     private PlayerAnimation playerAnimation;
     private UniversalSlider slider;
@@ -31,6 +32,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (isCollect)
             StartCollect();
+        // 采集&建造
         if (Input.GetKeyDown(KeyCode.E))
         {
             // 如果正在采集
@@ -39,17 +41,33 @@ public class PlayerInteraction : MonoBehaviour
                 FinishCollectInit();
             }
             // 如果可交互的话
-            else if(interaction != null)
+            else if (interaction != null)
             {
-               if(interaction.InteractionType == InteractionType.collect)
+                if (interaction.InteractionType == InteractionType.collect)
                 {
                     StartCollectInit();
                 }
+                else if (interaction.InteractionType == InteractionType.bulid)
+                {
+                    bulid.BulidHouse(box);
+                }
             }
         }
+        // 建筑销毁
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (interaction != null)
+            {
+                if (interaction.InteractionType == InteractionType.bulid)
+                {
+                    bulid.DestroyHouse();
+                }
+            }
+        }
+        // 打开背包
         if (Input.GetKeyDown(KeyCode.B))
         {
-            if(box.gameObject.activeSelf)
+            if (box.gameObject.activeSelf)
             {
                 box.CloseBox();
             }
@@ -69,7 +87,6 @@ public class PlayerInteraction : MonoBehaviour
         RaycastHit[] raycastHit = Physics.SphereCastAll(interactionPosition + transform.position, radius, transform.forward, radius / 2, layer);
         if (raycastHit.Length >= 1)
         {
-            Debug.Log(raycastHit[0].collider.name);
             interaction = raycastHit[0].collider.GetComponent<IInteractionInterface>();
             if (interaction != null)
             {
@@ -77,6 +94,11 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     collect = interaction as ICollect;
                     HintMessage.Single.ShowMessageText($"{collect.Name}:采集");
+                }
+                else if (interaction.InteractionType == InteractionType.bulid)
+                {
+                    HintMessage.Single.ShowMessageText("Q:销毁\nE:建造");
+                    bulid = interaction as IBulid;
                 }
             }
         }
@@ -96,7 +118,7 @@ public class PlayerInteraction : MonoBehaviour
         timeText += Time.deltaTime;
         CollectData collectData = collect.GetCollectData(Time.deltaTime);
         slider.UpdateSlider(1 - collectData.remainingTime / collectData.maxTime, $"正在采集{collect.Name}");
-        if(collectData.number > 0)
+        if (collectData.number > 0)
         {
             collectNum += collectData.number;
             if (timeText >= 1.5f)
@@ -117,10 +139,10 @@ public class PlayerInteraction : MonoBehaviour
                 .SetMessageText($"{collectData.collectType}:+{collectNum}");
                 box.AddItem(new ItemData() { number = collectNum, name = collectData.collectType.ToString() });
             }
-                
+
             collectNum = 0;
         }
-        
+
     }
     private void StartCollectInit()
     {

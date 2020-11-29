@@ -16,11 +16,14 @@ public class ResourcePath
     public GameObject wood = Resources.Load("UI\\木头") as GameObject;
     public GameObject stone = Resources.Load("UI\\石头") as GameObject;
     public GameObject food = Resources.Load("UI\\鸡腿") as GameObject;
+    public GameObject medicine = Resources.Load("UI\\回复药") as GameObject;
+    public GameObject foodHouse = Resources.Load("房子\\食物采集小屋") as GameObject;
 
     private ResourcePath()
     {
         articleUIs.Add(wood.GetComponent<ArticleUI>().itemData.name, wood);
         articleUIs.Add(stone.GetComponent<ArticleUI>().itemData.name, stone);
         articleUIs.Add(food.GetComponent<ArticleUI>().itemData.name, food);
+        articleUIs.Add(medicine.GetComponent<ArticleUI>().itemData.name, medicine);
     }
 }

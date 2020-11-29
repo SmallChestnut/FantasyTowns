@@ -10,9 +10,12 @@ public class PlayerInputManage : MonoBehaviour
     [Tooltip("玩家自由视角智能摄像机")]
     public GameObject VMcamera;
 
-    void Start()
+    private void Awake()
     {
         single = this;
+    }
+    void Start()
+    {
         playerMove = GetComponent<PlayerMove>();
     }
     /// <summary>
