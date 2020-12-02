@@ -69,6 +69,11 @@ public class Box : MonoBehaviour
         return itemData.number;
     }
 
+    /// <summary>
+    /// 从箱子里拿对于的物品出来
+    /// </summary>
+    /// <param name="itemData">需要拿的物品数据</param>
+    /// <returns></returns>
     public int GetItem(ItemData itemData)
     {
         int itemSum = 0; // 物品的累加

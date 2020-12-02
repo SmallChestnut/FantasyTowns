@@ -10,6 +10,12 @@ public class Collect : MonoBehaviour, ICollect
     [Tooltip("可采集资源的名字")]
     public string collectName;       // 资源名字
 
+    /// <summary>
+    /// 资源被采集完触发该事件
+    /// </summary>
+    public event Action<object, CollectEventArgs> OncollectDestroy;
+
+
     private float remainingTime;
     private float clock = 0; // 记录开采的时间
     private float collectNumber; // 10%的时间需要返回的资源数
@@ -25,6 +31,7 @@ public class Collect : MonoBehaviour, ICollect
     private void Finish()
     {
         Instantiate(corpse, transform.position, transform.rotation);
+        OncollectDestroy?.Invoke(gameObject, new CollectEventArgs(collectType));
         Destroy(gameObject);
         Destroy(transform.parent?.gameObject);
     }
@@ -45,14 +52,22 @@ public class Collect : MonoBehaviour, ICollect
         {
             collectNumber += maxNumber / 10f; // 计算10%的资源
             clock = 0;
-            
+
         }
         tempCollectNumber = (int)collectNumber;
         collectNumber -= tempCollectNumber;
         CollectData collectData = new CollectData(collectType, maxTime, remainingTime, tempCollectNumber, isDone);
         return collectData;
     }
-       
-
-    
 }
+public class CollectEventArgs : EventArgs
+{
+    public CollectType collectType;
+    public CollectEventArgs(CollectType collectType)
+    {
+        this.collectType = collectType;
+    }
+
+
+}
+

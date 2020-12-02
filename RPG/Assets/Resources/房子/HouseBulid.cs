@@ -13,35 +13,35 @@ public class HouseBulid : MonoBehaviour, IBulid
     public ItemData wood;
     [Tooltip("忽略的图层")]
     public LayerMask layer;
-
+    [Header("有多个模型数据的才手动添加")]
+    public List<MeshRenderer> meshRenderers;
 
     private Transform canvas;
     private Text stoneText;
     private Text woodText;
+    private List<Material> materials = new List<Material>();
     /// <summary>
     /// 是否可以建造该房子
     /// </summary>
     public bool IsBulid { get; set; } = true;
 
-    private List<Material> materials = new List<Material>();
+
     private Color color;
 
     public InteractionType InteractionType => InteractionType.bulid;
 
     private void Start()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        foreach(var x in meshRenderers)
         {
-            try
-            {
-                Material temp = transform.GetChild(i).GetComponent<MeshRenderer>().material;
-                materials.Add(temp);
-            }
-            catch (MissingComponentException)
-            {
-
-            }
+            materials.Add(x.material);
         }
+        try
+        {
+            materials.Add(GetComponent<MeshRenderer>().material);
+        }
+        catch (MissingComponentException) { }
+
         color = materials[0].color;
         canvas = transform.Find("Canvas");
         stoneText = canvas.Find("石头").GetChild(0).GetComponent<Text>();

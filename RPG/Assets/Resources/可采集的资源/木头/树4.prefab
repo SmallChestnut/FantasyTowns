@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8998175555815931204}
   - component: {fileID: 4807948702210741363}
   - component: {fileID: 4359665413360607481}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\u68114"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectType: 1
-  maxTime: 10
+  maxTime: 5
   maxNumber: 29
   corpse: {fileID: 6335014357461981192, guid: 52eeced4464a910479fd617c59a60f8c, type: 3}
   collectName: "\u6811"

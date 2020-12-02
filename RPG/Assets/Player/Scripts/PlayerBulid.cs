@@ -37,7 +37,7 @@ public class PlayerBulid : MonoBehaviour
     {
         if (bulidTemplet != null)
         {
-            bulidTemplet.GetComponent<BoxCollider>().isTrigger = false;
+            bulidTemplet.GetComponent<Collider>().isTrigger = false;
         }
         bulidTemplet = null;
         isBulid = false;
@@ -46,7 +46,7 @@ public class PlayerBulid : MonoBehaviour
     private void RayBulid()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit hit, 30, layer))
+        if(Physics.Raycast(ray, out RaycastHit hit, 20, layer))
         {
             bulidTemplet.transform.position = hit.point;
         }
@@ -57,6 +57,10 @@ public class PlayerBulid : MonoBehaviour
             {
                 CloseBulid();
             }
+        }
+        else if(Input.GetMouseButtonDown(1))
+        {
+            bulidTemplet.transform.Rotate(Vector3.up * 90);
         }
     }
 }

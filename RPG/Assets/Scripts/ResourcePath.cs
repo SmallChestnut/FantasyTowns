@@ -17,7 +17,22 @@ public class ResourcePath
     public GameObject stone = Resources.Load("UI\\石头") as GameObject;
     public GameObject food = Resources.Load("UI\\鸡腿") as GameObject;
     public GameObject medicine = Resources.Load("UI\\回复药") as GameObject;
-    public GameObject foodHouse = Resources.Load("房子\\食物采集小屋") as GameObject;
+    public GameObject woodObj1 = Resources.Load("可采集的资源\\木头\\树1") as GameObject;
+    public GameObject woodObj2 = Resources.Load("可采集的资源\\木头\\树2") as GameObject;
+    public GameObject woodObj3 = Resources.Load("可采集的资源\\木头\\树3") as GameObject;
+    public GameObject woodObj4 = Resources.Load("可采集的资源\\木头\\树4") as GameObject;
+    public GameObject woodObj5 = Resources.Load("可采集的资源\\木头\\树5") as GameObject;
+    public GameObject woodObj6 = Resources.Load("可采集的资源\\木头\\树6") as GameObject;
+    public GameObject woodObj7 = Resources.Load("可采集的资源\\木头\\树7") as GameObject;
+    public GameObject medicineObj1 = Resources.Load("可采集的资源\\回复\\回血药材1") as GameObject;
+    public GameObject medicineObj2 = Resources.Load("可采集的资源\\回复\\回血药材2") as GameObject;
+    public GameObject medicineObj3 = Resources.Load("可采集的资源\\回复\\回血药材3") as GameObject;
+    public GameObject stoneObj = Resources.Load("可采集的资源\\石头\\石头") as GameObject;
+    public GameObject foodObj1 = Resources.Load("可采集的资源\\食物\\灵果") as GameObject;
+    public GameObject foodObj2 = Resources.Load("可采集的资源\\食物\\蘑菇(大)") as GameObject;
+    public GameObject foodObj3 = Resources.Load("可采集的资源\\食物\\蘑菇(小)") as GameObject;
+    public GameObject foodObj4 = Resources.Load("可采集的资源\\食物\\野果") as GameObject;
+
 
     private ResourcePath()
     {

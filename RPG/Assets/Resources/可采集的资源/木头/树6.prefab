@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectType: 1
-  maxTime: 10
+  maxTime: 5
   maxNumber: 26
   corpse: {fileID: 5097965658878879240, guid: 220c699cc2340234fb251a0802fa6bf1, type: 3}
   collectName: "\u6811"
