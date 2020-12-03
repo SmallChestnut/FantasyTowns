@@ -31,6 +31,7 @@ public class PlayerInputManage : MonoBehaviour
     public void MayMove()
     {
         playerMove.isMove = true;
+        Menu.Single.CloseMenu();
     }
     /// <summary>
     /// 禁用玩家视角控制

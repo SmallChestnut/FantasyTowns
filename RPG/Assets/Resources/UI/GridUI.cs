@@ -15,6 +15,10 @@ public class GridUI : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        // 如果拖动的是“可拖动UI”就什么也不做
+        if (eventData.pointerDrag.tag == "DragUI")
+            return;
+
         // 如果当前格子上有物品
         if(Article != null)
         {

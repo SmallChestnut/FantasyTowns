@@ -106,6 +106,8 @@ MonoBehaviour:
   articleType: 0
   explain: "\u56DE\u590D\u751F\u547D\u503C"
   maxNumber: 10
+  consumablesType: 0
+  value: 10
 --- !u!1 &6900801147018555653
 GameObject:
   m_ObjectHideFlags: 0

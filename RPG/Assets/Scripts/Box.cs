@@ -117,12 +117,14 @@ public class Box : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         PlayerInputManage.single.ForbidVMCamera();
+        PlayerInputManage.single.ForbidMove();
         gameObject.SetActive(true);
     }
     public void CloseBox()
     {
         Cursor.lockState = CursorLockMode.Locked;
         PlayerInputManage.single.MayVMCamera();
+        PlayerInputManage.single.MayMove();
         gameObject.SetActive(false);
     }
 }

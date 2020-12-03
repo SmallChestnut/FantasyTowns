@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Map
+  - DragUI
   layers:
   - Default
   - TransparentFX

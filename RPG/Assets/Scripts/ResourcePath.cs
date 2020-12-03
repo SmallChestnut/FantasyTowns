@@ -17,6 +17,8 @@ public class ResourcePath
     public GameObject stone = Resources.Load("UI\\石头") as GameObject;
     public GameObject food = Resources.Load("UI\\鸡腿") as GameObject;
     public GameObject medicine = Resources.Load("UI\\回复药") as GameObject;
+    public GameObject menu = Resources.Load("UI\\菜单") as GameObject;
+    public GameObject button = Resources.Load("UI\\按钮") as GameObject;
     public GameObject woodObj1 = Resources.Load("可采集的资源\\木头\\树1") as GameObject;
     public GameObject woodObj2 = Resources.Load("可采集的资源\\木头\\树2") as GameObject;
     public GameObject woodObj3 = Resources.Load("可采集的资源\\木头\\树3") as GameObject;
