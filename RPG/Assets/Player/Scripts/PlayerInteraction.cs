@@ -14,6 +14,10 @@ public class PlayerInteraction : MonoBehaviour
     public float radius;
     [Tooltip("背包")]
     public Box box;
+
+    [HideInInspector]
+    public Queue<NPC> NPCQueue = new Queue<NPC>();
+
     private ICollect collect;
     private IBulid bulid;
     private IInteractionInterface interaction;
@@ -100,6 +104,32 @@ public class PlayerInteraction : MonoBehaviour
                     HintMessage.Single.ShowMessageText("Q:销毁\nE:建造");
                     bulid = interaction as IBulid;
                 }
+            }
+            else
+            {
+                House house = raycastHit[0].collider.GetComponent<House>();
+                
+                if(house != null)
+                {
+                    
+                    if(house.houseMenu.gameObject.activeSelf)
+                    {
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            house.CloseMenu();
+                        }
+                        HintMessage.Single.CloseMessageText();
+                    }
+                    else
+                    {
+                        HintMessage.Single.ShowMessageText("E:打开菜单");
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            house.OpenMenu();
+                        }
+                    }
+                }
+               
             }
         }
         else

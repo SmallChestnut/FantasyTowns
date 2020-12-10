@@ -6,7 +6,8 @@ public class ResourcePath
 {
     public static ResourcePath Single { get; } = new ResourcePath();
 
-    public Dictionary<string, GameObject> articleUIs = new Dictionary<string, GameObject>(); 
+    public Dictionary<string, GameObject> articleUIs = new Dictionary<string, GameObject>();
+    public List<GameObject> NPCList = new List<GameObject>();
 
     public GameObject universalSlider = Resources.Load("UI\\进度条") as GameObject;
     public GameObject universalHintMessage = Resources.Load("UI\\交互提示") as GameObject;
@@ -34,6 +35,18 @@ public class ResourcePath
     public GameObject foodObj2 = Resources.Load("可采集的资源\\食物\\蘑菇(大)") as GameObject;
     public GameObject foodObj3 = Resources.Load("可采集的资源\\食物\\蘑菇(小)") as GameObject;
     public GameObject foodObj4 = Resources.Load("可采集的资源\\食物\\野果") as GameObject;
+    public GameObject axe = Resources.Load("NPC\\工具\\斧头") as GameObject;
+    public GameObject pickaxe = Resources.Load("NPC\\工具\\镐子") as GameObject;
+    public GameObject woodBasket = Resources.Load("NPC\\工具\\木头") as GameObject;
+    public GameObject foodBasket = Resources.Load("NPC\\工具\\食物") as GameObject;
+    public GameObject stoneBasket = Resources.Load("NPC\\工具\\矿物") as GameObject;
+    public GameObject medicineBasket = Resources.Load("NPC\\工具\\药材") as GameObject;
+    public GameObject emptyBasket = Resources.Load("NPC\\工具\\空") as GameObject;
+    public GameObject NPC1 = Resources.Load("NPC\\NPC1") as GameObject;
+    public GameObject NPC2 = Resources.Load("NPC\\NPC2") as GameObject;
+  //  public GameObject NPC3 = Resources.Load("NPC\\NPC3") as GameObject;
+    public GameObject NPC4 = Resources.Load("NPC\\NPC4") as GameObject;
+    public GameObject NPC5 = Resources.Load("NPC\\NPC5") as GameObject;
 
 
     private ResourcePath()
@@ -42,5 +55,11 @@ public class ResourcePath
         articleUIs.Add(stone.GetComponent<ArticleUI>().itemData.name, stone);
         articleUIs.Add(food.GetComponent<ArticleUI>().itemData.name, food);
         articleUIs.Add(medicine.GetComponent<ArticleUI>().itemData.name, medicine);
+
+        NPCList.Add(NPC1);
+        NPCList.Add(NPC2);
+       // NPCList.Add(NPC3);
+        NPCList.Add(NPC4);
+        NPCList.Add(NPC5);
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5510091793251166828}
   - component: {fileID: 5510091793254959154}
   - component: {fileID: 5510091791949600742}
+  - component: {fileID: 2842787842053273402}
   m_Layer: 8
   m_Name: "\u77F3\u5934"
   m_TagString: Untagged
@@ -92,7 +93,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: e399af9d66682f149b2b761a48e7d46e, type: 3}
 --- !u!114 &5510091791949600742
@@ -108,7 +109,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectType: 0
-  maxTime: 4
+  maxTime: 3
   maxNumber: 28
   corpse: {fileID: 8687680931838358227, guid: eaa26e61d5021cc44b85b018c4fe8c7c, type: 3}
   collectName: "\u77F3\u5934"
+--- !u!208 &2842787842053273402
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510091793252870662}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.82600003, y: 0.367, z: 0.574}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.014, y: 0.337, z: -0.038000003}
+  m_TimeToStationary: 0.5

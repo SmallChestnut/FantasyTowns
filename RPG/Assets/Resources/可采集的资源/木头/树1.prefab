@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5925967556015725322}
   - component: {fileID: 5925967556004415082}
   - component: {fileID: 4431432256654408113}
+  - component: {fileID: 1530435595700467318}
   m_Layer: 8
   m_Name: "\u68111"
   m_TagString: Untagged
@@ -113,3 +114,19 @@ MonoBehaviour:
   maxNumber: 15
   corpse: {fileID: 3397271432317621584, guid: e2549b29b4098be4abd1507fad2ae1d7, type: 3}
   collectName: "\u6811"
+--- !u!208 &1530435595700467318
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925967556017653194}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.3, y: 9.7, z: 0.3}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 9.73, z: 0}
+  m_TimeToStationary: 0.5

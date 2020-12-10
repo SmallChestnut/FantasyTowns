@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class EnvironmentCreate : MonoBehaviour
 {
+    /// <summary>
+    /// 记录着所有环境生成器
+    /// </summary>
+    [HideInInspector]
+    public static List<EnvironmentCreate> environmentCreates = new List<EnvironmentCreate>();
+
 
     [Header("环境生成的范围")]
     public Vector3 crash;
@@ -18,6 +24,17 @@ public class EnvironmentCreate : MonoBehaviour
     [Header("生成射线碰撞层")]
     public LayerMask layer;
 
+    // 用来存放各个资源的位置
+    [HideInInspector]
+    public List<Transform> woodListPosition = new List<Transform>();
+    [HideInInspector]
+    public List<Transform> stoneListPosition = new List<Transform>();
+    [HideInInspector]
+    public List<Transform> foodListPosition = new List<Transform>();
+    [HideInInspector]
+    public List<Transform> medicineListPosition = new List<Transform>();
+
+
     // 用来实例化各项资源的列表
     private List<GameObject> woodList = new List<GameObject>();
     private List<GameObject> stoneList = new List<GameObject>();
@@ -29,6 +46,7 @@ public class EnvironmentCreate : MonoBehaviour
     private int stoneSum;
     private int foodSum;
     private int medicineSum;
+
     private void Start()
     {
         #region 树
@@ -63,7 +81,7 @@ public class EnvironmentCreate : MonoBehaviour
         StartCoroutine(CreateMedicine());
         StartCoroutine(CreateStone());
 
-
+        environmentCreates.Add(this);
     }
     IEnumerator CreateWood()
     {
@@ -77,6 +95,7 @@ public class EnvironmentCreate : MonoBehaviour
                 Instantiate(woodList[UnityEngine.Random.Range(0, woodList.Count)], position, Quaternion.identity);
                 woodSum++;
                 temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
+                woodListPosition.Add(temp.transform);
             }
 
             yield return new WaitForSeconds(0.1f);
@@ -94,6 +113,7 @@ public class EnvironmentCreate : MonoBehaviour
                 Instantiate(foodList[UnityEngine.Random.Range(0, foodList.Count)], position, Quaternion.identity);
                 foodSum++;
                 temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
+                foodListPosition.Add(temp.transform);
             }
 
             yield return new WaitForSeconds(0.1f);
@@ -111,6 +131,7 @@ public class EnvironmentCreate : MonoBehaviour
                 Instantiate(medicineList[UnityEngine.Random.Range(0, medicineList.Count)], position, Quaternion.identity);
                 medicineSum++;
                 temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
+                medicineListPosition.Add(temp.transform);
             }
 
             yield return new WaitForSeconds(0.1f);
@@ -129,6 +150,7 @@ public class EnvironmentCreate : MonoBehaviour
                 GameObject temp = Instantiate(stoneList[0], position, Quaternion.identity);
                 stoneSum++;
                 temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
+                stoneListPosition.Add(temp.transform);
             }
 
             yield return new WaitForSeconds(0.1f);
@@ -137,19 +159,24 @@ public class EnvironmentCreate : MonoBehaviour
 
     private void OnDestroyCollect(object obj, CollectEventArgs e)
     {
+        Collect collect = obj as Collect;
         switch (e.collectType)
         {
             case CollectType.石头:
                 stoneSum -= 1;
+                stoneListPosition.Remove(collect.transform);
                 break;
             case CollectType.木头:
                 woodSum -= 1;
+                woodListPosition.Remove(collect.transform);
                 break;
             case CollectType.食物:
                 foodSum -= 1;
+                foodListPosition.Remove(collect.transform);
                 break;
             case CollectType.回复药:
                 medicineSum -= 1;
+                medicineListPosition.Remove(collect.transform);
                 break;
             default:
                 break;

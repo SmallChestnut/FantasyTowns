@@ -29,11 +29,11 @@ public class GridUI : MonoBehaviour, IDropHandler
                 // 将拖拽的物品的格子对该物品的引用置空
                 temp.ArticleGrid.Article = null;
                 Box box = transform.parent.parent.GetComponent<Box>();
-                // 清楚箱子对该物品的引用
+                // 清除箱子对该物品的引用
                 box.box.Remove(temp);
                 // 进行物品添加
                 box.AddItem(temp.itemData.Clone());
-                // 消耗拖拽的该物品
+                // 删除拖拽的该物品
                 Destroy(temp.gameObject);
             }
             // 否则将这个物品移动到用户拖拽过来的物品之前的格子（交换位置）

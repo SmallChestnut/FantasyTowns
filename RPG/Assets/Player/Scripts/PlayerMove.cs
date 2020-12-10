@@ -36,6 +36,8 @@ public class PlayerMove : MonoBehaviour
     {
         if (isMove)
             Move();
+        else
+            playerAnimation.Idle();
     }
 
     private void Move()

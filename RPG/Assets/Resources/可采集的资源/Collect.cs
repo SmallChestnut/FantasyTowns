@@ -31,7 +31,7 @@ public class Collect : MonoBehaviour, ICollect
     private void Finish()
     {
         Instantiate(corpse, transform.position, transform.rotation);
-        OncollectDestroy?.Invoke(gameObject, new CollectEventArgs(collectType));
+        OncollectDestroy?.Invoke(this, new CollectEventArgs(collectType));
         Destroy(gameObject);
         Destroy(transform.parent?.gameObject);
     }

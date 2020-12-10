@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 8998175555818356644}
   - component: {fileID: 8998175555817029508}
   - component: {fileID: 8998175555815931204}
-  - component: {fileID: 4807948702210741363}
   - component: {fileID: 4359665413360607481}
+  - component: {fileID: 3205491705825431730}
+  - component: {fileID: 7642323994901425025}
   m_Layer: 8
   m_Name: "\u68114"
   m_TagString: Untagged
@@ -82,20 +83,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &4807948702210741363
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8998175555817857924}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 8606c21208a6abf4aa86e39e9938598b, type: 3}
 --- !u!114 &4359665413360607481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,3 +100,33 @@ MonoBehaviour:
   maxNumber: 29
   corpse: {fileID: 6335014357461981192, guid: 52eeced4464a910479fd617c59a60f8c, type: 3}
   collectName: "\u6811"
+--- !u!136 &3205491705825431730
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8998175555817857924}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.48
+  m_Height: 6.42
+  m_Direction: 1
+  m_Center: {x: -0.16, y: 2.9, z: -0.31}
+--- !u!208 &7642323994901425025
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8998175555817857924}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.3, y: 9.7, z: 0.3}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.09, y: 9.47, z: -0.27}
+  m_TimeToStationary: 0.5

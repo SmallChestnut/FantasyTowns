@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1189033528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1189033529}
+  m_Layer: 12
+  m_Name: "NPC\u751F\u6210\u70B9"
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1189033529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189033528}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.98, y: 0.15, z: -5.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1721638750521051065}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1721638750521219985
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +387,9 @@ GameObject:
   - component: {fileID: 1721638750523475285}
   - component: {fileID: 3142528645166962244}
   - component: {fileID: 1988001644403870770}
-  m_Layer: 0
+  - component: {fileID: 181766044}
+  - component: {fileID: 6147957334114582767}
+  m_Layer: 12
   m_Name: "\u77FF\u7269\u91C7\u96C6\u5C0F\u5C4B"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,15 +403,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721638750521219993}
-  m_LocalRotation: {x: 0, y: 0.026089258, z: 0, w: 0.99965966}
+  m_LocalRotation: {x: 0, y: 0.026089692, z: 0, w: 0.9996596}
   m_LocalPosition: {x: 78.64651, y: 5.9559736, z: 78.22865}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1721638750521051063}
   - {fileID: 1721638750521051057}
+  - {fileID: 1189033529}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 2.9900002, z: 0}
 --- !u!33 &1721638750522345365
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -457,3 +490,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &181766044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721638750521219993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ba79474868a64991c0585aac53d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectType: 0
+  isCollect: 1
+  NPCNumber: 0
+  isCollectHouse: 1
+  houseMenu: {fileID: 0}
+--- !u!208 &6147957334114582767
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721638750521219993}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.4350004, y: 4.372, z: 4.6720004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.120000005, y: 4.372, z: -0.86500007}
+  m_TimeToStationary: 0.5

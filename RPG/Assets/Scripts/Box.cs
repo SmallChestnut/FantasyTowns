@@ -15,6 +15,8 @@ public class Box : MonoBehaviour
     /// <returns>返回没有添加进去的物品数量</returns>
     public int AddItem(ItemData itemData)
     {
+        if (itemData.number == 0)
+            return 0;
         // 先判断箱子里是否已经有重复的物品，如果有就叠加在一起
         for(int i = 0; i < box.Count; i++)
         {
@@ -137,6 +139,16 @@ public class ItemData
 {
     public string name;                 // 物品名字
     public int number = 1;              // 物品数量
+
+    public ItemData()
+    {
+
+    }
+    public ItemData(string name, int number)
+    {
+        this.name = name;
+        this.number = number;
+    }
 
     public ItemData Clone() => MemberwiseClone() as ItemData;
 }

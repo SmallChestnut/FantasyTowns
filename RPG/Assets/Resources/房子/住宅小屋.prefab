@@ -1057,7 +1057,9 @@ GameObject:
   - component: {fileID: 147115584018894755}
   - component: {fileID: 249128956622585515}
   - component: {fileID: 175614351428439101}
-  m_Layer: 0
+  - component: {fileID: 3876547162969782109}
+  - component: {fileID: 8721200985250875761}
+  m_Layer: 12
   m_Name: "\u4F4F\u5B85\u5C0F\u5C4B"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1168,6 +1170,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3876547162969782109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147115584020828541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ba79474868a64991c0585aac53d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectType: 0
+  isCollect: 0
+  NPCNumber: 5
+  isCollectHouse: 0
+  houseMenu: {fileID: 0}
+--- !u!208 &8721200985250875761
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147115584020828541}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4.7510004, y: 4.4290004, z: 4.959}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 4.4290004, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &147115584020828543
 GameObject:
   m_ObjectHideFlags: 0

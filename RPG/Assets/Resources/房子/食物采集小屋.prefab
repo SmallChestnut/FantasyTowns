@@ -108,7 +108,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3907802301513430057}
-  m_Layer: 0
+  - component: {fileID: 7343480819273167134}
+  - component: {fileID: 2924252285337318878}
+  - component: {fileID: 7108477911121091764}
+  - component: {fileID: 8268423839315563872}
+  m_Layer: 12
   m_Name: "\u98DF\u7269\u91C7\u96C6\u5C0F\u5C4B"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,16 +126,79 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3907802301513787401}
-  m_LocalRotation: {x: 0, y: 0.063749924, z: 0, w: 0.99796593}
+  m_LocalRotation: {x: 0, y: 0.06374849, z: 0, w: 0.99796605}
   m_LocalPosition: {x: 54.01634, y: 0.63290334, z: 41.344646}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3907802301513430063}
   - {fileID: 3907802301513430049}
   - {fileID: 3907802301513430061}
+  - {fileID: 1372988231389779678}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 7.3100004, z: 0}
+--- !u!114 &7343480819273167134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3907802301513787401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ba79474868a64991c0585aac53d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectType: 2
+  isCollect: 1
+  NPCNumber: 0
+  isCollectHouse: 1
+  houseMenu: {fileID: 0}
+--- !u!65 &2924252285337318878
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3907802301513787401}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.15, y: 2.97, z: 10.09}
+  m_Center: {x: 0, y: 1.73, z: 1.6}
+--- !u!54 &7108477911121091764
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3907802301513787401}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!208 &8268423839315563872
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3907802301513787401}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.09, y: 0.965, z: 4.925}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.4, y: 1.03, z: 1.5}
+  m_TimeToStationary: 0.5
 --- !u!1 &3907802301513787403
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +462,36 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 6556a9e9be670ab4d98bc0937bb53051, type: 3}
+--- !u!1 &7843222292600596555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1372988231389779678}
+  m_Layer: 12
+  m_Name: "NPC\u751F\u6210\u70B9"
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1372988231389779678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7843222292600596555}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.27, y: 0.1, z: -3.98}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3907802301513430057}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
