@@ -44,7 +44,7 @@ public class ResourcePath
     public GameObject emptyBasket = Resources.Load("NPC\\工具\\空") as GameObject;
     public GameObject NPC1 = Resources.Load("NPC\\NPC1") as GameObject;
     public GameObject NPC2 = Resources.Load("NPC\\NPC2") as GameObject;
-  //  public GameObject NPC3 = Resources.Load("NPC\\NPC3") as GameObject;
+    public GameObject NPC3 = Resources.Load("NPC\\NPC3") as GameObject;
     public GameObject NPC4 = Resources.Load("NPC\\NPC4") as GameObject;
     public GameObject NPC5 = Resources.Load("NPC\\NPC5") as GameObject;
 
@@ -58,7 +58,7 @@ public class ResourcePath
 
         NPCList.Add(NPC1);
         NPCList.Add(NPC2);
-       // NPCList.Add(NPC3);
+        NPCList.Add(NPC3);
         NPCList.Add(NPC4);
         NPCList.Add(NPC5);
     }

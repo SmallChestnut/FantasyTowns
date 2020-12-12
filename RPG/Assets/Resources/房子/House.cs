@@ -151,9 +151,9 @@ public class House : MonoBehaviour
                     if(isTemp)
                     {
                         NPC npc = NPCQueue.Dequeue();
-                        npc.gameObject.SetActive(true);
                         npc.transform.position = birthPoint.position;
-                        npc.SetCollect(collectType, environmentCreate, transform);
+                        npc.gameObject.SetActive(true);
+                        npc.SetTask(collectType, environmentCreate, transform);
                     }
                 }
 

@@ -11,288 +11,55 @@ public class NPC : MonoBehaviour
     [Tooltip("肩膀")]
     public SkinnedMeshRenderer shoulder;
 
-    private NavMeshAgent meshAgent;  // 寻路导航
-    private NPCAnimation anima;      // 动画    
-    private GameObject targetObj;    // 目标对象
-    private ItemData itemData;       // 用于收集资源
-    private GameObject tool;         // 工具
-    private CollectType collectType1;   // 记录采集的类型
-    private EnvironmentCreate environmentCreate;    //记录采集的资源地
-    private Transform commender;            //  记录发送命令者
-    private bool isHome;                // 是否回家
+    [HideInInspector]
+    public NavMeshAgent meshAgent;  // 寻路导航
+
+    [HideInInspector]
+    public NPCAnimation anima;      // 动画    
+
+    [HideInInspector]
+    public ItemData itemData;       // 用于收集资源
+
+    [HideInInspector]
+    public GameObject tool;         // 工具
+
+    [HideInInspector]
+    public CollectType collectType;   // 记录采集的类型
+
+    [HideInInspector]
+    public EnvironmentCreate environmentCreate;    //记录采集的资源地
+
+    [HideInInspector]
+    public Transform commender;            //  记录发送命令者
+
+    private NPC_FSM FSM;
 
     private void Awake()
     {
         anima = new NPCAnimation(GetComponent<Animator>());
+        FSM = new NPC_FSM(new NPCIdle(FSM), this);
     }
 
     void Start()
     {
         meshAgent = GetComponent<NavMeshAgent>();
-       
         
+
     }
-    private void OnEnable()
-    {
-        isHome = false;
-    }
+
     private void Update()
     {
-        if(isHome)
-        {
-            if(Vector3.Distance(transform.position, commender.position) < 8)
-            {
-                House house = commender.GetComponent<House>();
-                house.NPCQueue.Enqueue(this);
-                house.AddCollect(itemData.Clone());
-                itemData = null;
-                gameObject.SetActive(false);
-            }
-           
-        }
-            
+        FSM.Update();
     }
-    /// <summary>
-    /// 设置资源采集任务
-    /// </summary>
-    /// <param name="collectType">资源的类型</param>
-    /// <param name="environmentCreate">资源区域</param>
-    /// <param name="commender">发送命令者</param>
-    public void SetCollect(CollectType collectType, EnvironmentCreate environmentCreate, Transform commender)
+    public void SetTask(CollectType collectType, EnvironmentCreate environmentCreate, Transform commender)
     {
-        this.collectType1 = collectType;
+        this.collectType = collectType;
         this.environmentCreate = environmentCreate;
         this.commender = commender;
-
-        Debug.Log("设定目标");
-        if (tool != null)
-        {
-            Destroy(tool);
-            tool = null;
-        }
-        shoulder.sharedMesh = ResourcePath.Single.emptyBasket.GetComponent<MeshFilter>().sharedMesh;
-        
-        switch (collectType)
-        {
-            case CollectType.石头:
-                StartCoroutine(FindCollect(environmentCreate.stoneListPosition));
-                tool = Instantiate(ResourcePath.Single.pickaxe, hend);
-                break;
-            case CollectType.木头:
-                StartCoroutine(FindCollect(environmentCreate.woodListPosition));
-                tool = Instantiate(ResourcePath.Single.axe, hend);
-                break;
-            case CollectType.食物:
-                StartCoroutine(FindCollect(environmentCreate.foodListPosition));
-                break;
-            case CollectType.回复药:
-                StartCoroutine(FindCollect(environmentCreate.medicineListPosition));
-                break;
-            default:
-                break;
-        }
-        if(tool != null)
-        {
-            tool.transform.position = hend.position;
-        }
-        
-    }
-    /// <summary>
-    /// 寻找当前资源区域最近的目标
-    /// </summary>
-    /// <param name="collectList">当前区域的全部资源</param>
-    /// <returns></returns>
-    private IEnumerator FindCollect(List<Transform> collectList)
-    {
-        if(collectList.Count <= 0)
-        {
-            throw new System.Exception("没有资源");
-        }
-
-        float minPosition = float.MaxValue; // 用来记录最短的距离，初始化个最大值
-        Transform target = null;
-        float temp;
-        anima.Find();
-        for (int i = 0; i < collectList.Count; i++)
-        {
-            temp = Vector3.Distance(transform.position, collectList[i].position);
-            if (temp < minPosition)
-            {
-                minPosition = temp;
-                target = collectList[i];
-            }
-            yield return new WaitForSeconds(0.01f);
-        }
-        try
-        {
-            MoveTargetCollect(target);
-            targetObj = target.gameObject;
-            targetObj.GetComponent<Collect>().OncollectDestroy += FinishCollect;
-        }
-        catch (MissingReferenceException)
-        {
-            MoveTargetCollect(commender);
-        }
-        Debug.Log("查找");
-    }
-    /// <summary>
-    /// 资源被采集完成后触发的事件处理，背包有东西就回家，没东西就继续找新的资源
-    /// </summary>
-    /// <param name="obj">资源对象</param>
-    /// <param name="e">资源信息</param>
-    private void FinishCollect(object obj, CollectEventArgs e)
-    {
-        
-        if (itemData == null || itemData.number == 0)
-        {
-            Debug.Log("设定值：自己");
-            meshAgent.SetDestination(transform.position);
-            SetCollect(collectType1, environmentCreate, commender);
-        }
-        else if(itemData.number > 0)
-        {
-            isHome = true;
-            MoveTargetCollect(commender);// 背包有东西，放回家里
-            switch (collectType1)
-            {
-                case CollectType.石头:
-                    // 换成装满石头的篮子
-                    shoulder.sharedMesh = ResourcePath.Single.
-                                          stoneBasket.GetComponent<MeshFilter>().sharedMesh;
-                    break;
-                case CollectType.木头:
-                    // 换成装满木头的篮子
-                    shoulder.sharedMesh = ResourcePath.Single.woodBasket.GetComponent<MeshFilter>().sharedMesh;
-                    break;
-                case CollectType.食物:
-                    // 换成装满食物的篮子
-                    shoulder.sharedMesh = ResourcePath.Single.foodBasket.GetComponent<MeshFilter>().sharedMesh;
-                    break;
-                case CollectType.回复药:
-                    // 换成装满药材的篮子
-                    shoulder.sharedMesh = ResourcePath.Single.
-                                          medicineBasket.GetComponent<MeshFilter>().sharedMesh;
-                    break;
-                default:
-                    break;
-            }
-            Debug.Log($"完成采集{itemData.name}:{itemData.number}");
-        }
-        else
-        {
-            throw new System.Exception();
-        }
-        
-    }
-
-    /// <summary>
-    /// 向目标移动
-    /// </summary>
-    /// <param name="target">目标</param>
-    private void MoveTargetCollect(Transform target)
-    {
-        try
-        {
-            meshAgent.SetDestination(target.position);
-            Debug.Log(target.position);
-        }
-        catch (System.Exception)
-        {
-            SetCollect(collectType1, environmentCreate, commender);
-        }
-        
-        anima.Run();
-    }
-    /// <summary>
-    /// 是否到达了目标的旁边
-    /// </summary>
-    /// <param name="other">碰撞体</param>
-    private void OnTriggerEnter(Collider other)
-    {
-        if (targetObj != null)
-        {
-            if(other.gameObject == targetObj && !isHome)
-            {
-                Debug.Log("设定值：自己");
-                meshAgent.SetDestination(transform.position);
-                anima.Idle();
-                StartCoroutine(StartCollect(targetObj.GetComponent<Collect>()));
-                targetObj = null;
-            }
-        }
-    }
-    /// <summary>
-    /// 开始采集该资源
-    /// </summary>
-    /// <param name="collect">资源类</param>
-    /// <returns></returns>
-    private IEnumerator StartCollect(Collect collect)
-    {
-        itemData = new ItemData() { name = collect.collectType.ToString(), number = 0 };
-        while(true)
-        {
-            switch (collect.collectType)
-            {
-                case CollectType.石头:
-                    anima.Mine();
-                    break;
-                case CollectType.木头:
-                    anima.Lumbering();
-                    break;
-                case CollectType.食物:
-                    anima.Gather();
-                    break;
-                case CollectType.回复药:
-                    anima.Gather();
-                    break;
-                default:
-                    break;
-            }
-            if(collect == null)
-            {
-                isHome = true;
-                MoveTargetCollect(commender);
-                break;
-            }
-            CollectData collectData = collect.GetCollectData(0.01f);
-            transform.LookAt(new Vector3(collect.transform.position.x, transform.position.y, collect.transform.position.z));
-            if (collectData.number > 0)
-            {
-                itemData.number += collectData.number;
-            }
-            if (collectData.isDone)
-            {
-                switch (collect.collectType)
-                {
-                    case CollectType.石头:
-                        // 换成装满石头的篮子
-                        shoulder.sharedMesh = ResourcePath.Single.
-                                              stoneBasket.GetComponent<MeshFilter>().sharedMesh;
-                        break;
-                    case CollectType.木头:
-                        // 换成装满木头的篮子
-                        shoulder.sharedMesh = ResourcePath.Single.woodBasket.GetComponent<MeshFilter>().sharedMesh;
-                        break;
-                    case CollectType.食物:
-                        // 换成装满食物的篮子
-                        shoulder.sharedMesh = ResourcePath.Single.foodBasket.GetComponent<MeshFilter>().sharedMesh;
-                        break;
-                    case CollectType.回复药:
-                        // 换成装满药材的篮子
-                        shoulder.sharedMesh = ResourcePath.Single.
-                                              medicineBasket.GetComponent<MeshFilter>().sharedMesh;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            }
-            yield return new WaitForSeconds(0.01f);
-        }
-        yield return new WaitForSeconds(3f);
+        FSM.SetState(new NPCFindCollect(FSM));
     }
 }
-
+   
 public class NPCAnimation
 {
     private Animator animation;
@@ -348,6 +115,288 @@ public class NPCAnimation
     public void Talk()
     {
         animation.SetInteger("State", 1);
+    }
+}
+/// <summary>
+/// 休息
+/// </summary>
+public class NPCIdle : IState
+{
+    public NPC_FSM _FSM { get; set; }
+
+    public NPCIdle(NPC_FSM _FSM)
+    {
+        this._FSM = _FSM;
+    }
+    public void Update()
+    {
+        _FSM.NPC_Obj.anima.Idle();
+    }
+}
+/// <summary>
+/// 状态机
+/// </summary>
+public class NPC_FSM
+{
+    public NPC NPC_Obj;
+    private IState state;
+
+    public NPC_FSM(IState state, NPC NPC_Obj)
+    {
+        this.NPC_Obj = NPC_Obj;
+        this.state = state;
+    }
+    /// <summary>
+    /// 设置状态
+    /// </summary>
+    /// <param name="state">实现状态接口的类</param>
+    public void SetState(IState state)
+    {
+        this.state = state;
+    }
+    /// <summary>
+    /// 每帧执行状态
+    /// </summary>
+    public void Update()
+    {
+        state.Update();
+    }
+}
+/// <summary>
+/// 状态机接口
+/// </summary>
+public interface IState
+{
+    NPC_FSM _FSM { get; set; }
+    void Update();
+}
+/// <summary>
+/// NPC对资源进行采集
+/// </summary>
+public class NPCCollect : IState
+{
+    public NPC_FSM _FSM { get; set; }
+    private Collect target;
+    public NPCCollect(Transform target, NPC_FSM _FSM)
+    {
+        this._FSM = _FSM;
+        this.target = target.GetComponent<Collect>();
+        switch (_FSM.NPC_Obj.collectType)
+        {
+            case CollectType.石头:
+                _FSM.NPC_Obj.anima.Mine();
+                break;
+            case CollectType.木头:
+                _FSM.NPC_Obj.anima.Lumbering();
+                break;
+            case CollectType.食物:
+                _FSM.NPC_Obj.anima.Gather();
+                break;
+            case CollectType.回复药:
+                _FSM.NPC_Obj.anima.Gather();
+                break;
+            default:
+                break;
+        }
+        _FSM.NPC_Obj.itemData = new ItemData(this.target.collectType.ToString(), 0);
+        this.target.OncollectDestroy += Finish;
+    }
+
+    public void Update()
+    {
+        _FSM.NPC_Obj.transform.LookAt(new Vector3(target.transform.position.x, _FSM.NPC_Obj.transform.position.y, target.transform.position.z));
+        CollectData collectData = target.GetCollectData(Time.deltaTime);
+        if (collectData.number > 0)
+        {
+            _FSM.NPC_Obj.itemData.number += collectData.number;
+            if(collectData.isDone)
+            {
+                // 再检查一次背包是否有东西，因为在物资累加之前会先触发事件回调
+                Finish(this, new CollectEventArgs(_FSM.NPC_Obj.collectType));
+            }
+        }
+       
+    }
+    // 采集完成
+    private void Finish(object obj, CollectEventArgs e)
+    {
+        // 判断一下背包是否有物资
+        if(_FSM.NPC_Obj.itemData.number == 0)
+        {
+            _FSM.SetState(new NPCFindCollect(_FSM));
+        }
+        else
+        {
+            // 将篮子换成装好物资的篮子
+            switch (_FSM.NPC_Obj.collectType)
+            {
+                case CollectType.石头:
+                    _FSM.NPC_Obj.shoulder.sharedMesh = ResourcePath.Single.stoneBasket.GetComponent<MeshFilter>().sharedMesh;
+                    break;
+                case CollectType.木头:
+                    _FSM.NPC_Obj.shoulder.sharedMesh = ResourcePath.Single.woodBasket.GetComponent<MeshFilter>().sharedMesh;
+                    break;
+                case CollectType.食物:
+                    _FSM.NPC_Obj.shoulder.sharedMesh = ResourcePath.Single.foodBasket.GetComponent<MeshFilter>().sharedMesh;
+                    break;
+                case CollectType.回复药:
+                    _FSM.NPC_Obj.shoulder.sharedMesh = ResourcePath.Single.medicineBasket.GetComponent<MeshFilter>().sharedMesh;
+                    break;
+                default:
+                    break;
+            }
+            _FSM.SetState(new NPCMoveHome(_FSM));
+        }
+    }
+}
+/// <summary>
+/// 搜索资源
+/// </summary>
+public class NPCFindCollect : IState
+{
+    public NPC_FSM _FSM { get; set; }
+    private List<Transform> collects;
+    public NPCFindCollect(NPC_FSM _FSM)
+    {
+        this._FSM = _FSM;
+        _FSM.NPC_Obj.anima.Find();
+        _FSM.NPC_Obj.shoulder.sharedMesh = ResourcePath.Single.emptyBasket.GetComponent<MeshFilter>().sharedMesh;
+        if(_FSM.NPC_Obj.tool != null)
+        {
+            GameObject.Destroy(_FSM.NPC_Obj.tool);
+            _FSM.NPC_Obj.tool = null;
+        }
+        // 根据物资查找类型更换对应的物资工具，并且确定要搜索的物资列表
+        switch (_FSM.NPC_Obj.collectType)
+        {
+            case CollectType.石头:
+                collects = _FSM.NPC_Obj.environmentCreate.stoneListPosition;
+                _FSM.NPC_Obj.tool = GameObject.Instantiate(ResourcePath.Single.pickaxe, _FSM.NPC_Obj.hend);
+                _FSM.NPC_Obj.tool.transform.position = _FSM.NPC_Obj.hend.position;
+                break;
+            case CollectType.木头:
+                collects = _FSM.NPC_Obj.environmentCreate.woodListPosition;
+                _FSM.NPC_Obj.tool = GameObject.Instantiate(ResourcePath.Single.axe, _FSM.NPC_Obj.hend);
+                _FSM.NPC_Obj.tool.transform.position = _FSM.NPC_Obj.hend.position;
+                break;
+            case CollectType.食物:
+                collects = _FSM.NPC_Obj.environmentCreate.foodListPosition;
+                // 空手
+                break;
+            case CollectType.回复药:
+                collects = _FSM.NPC_Obj.environmentCreate.medicineListPosition;
+                // 空手
+                break;
+            default:
+                break;
+        }
+    }
+    int index = 0;
+    float distance = float.MaxValue;    // 记录最近的值
+    Transform target = null;
+    public void Update()
+    {
+        _FSM.NPC_Obj.meshAgent.SetDestination(_FSM.NPC_Obj.transform.position);
+        if (collects.Count == 0)
+        {
+            _FSM.SetState(new NPCMoveHome(_FSM));
+        }
+        else if(index >= collects.Count)
+        {
+            _FSM.SetState(new NPCMoveCollect(target, _FSM));
+        }
+        else if(Vector3.Distance(_FSM.NPC_Obj.transform.position, collects[index].position) < distance)
+        {
+            target = collects[index];
+            distance = Vector3.Distance(_FSM.NPC_Obj.transform.position, collects[index].position);
+        }
+        index++;
+    }
+}
+/// <summary>
+/// NPC向物资移动
+/// </summary>
+public class NPCMoveCollect : IState
+{
+    public NPC_FSM _FSM { get; set; }
+    private Transform target;
+    public NPCMoveCollect(Transform target, NPC_FSM _FSM)
+    {
+        this._FSM = _FSM;
+        _FSM.NPC_Obj.anima.Run();
+        this.target = target;
+        try
+        {
+            _FSM.NPC_Obj.meshAgent.SetDestination(target.position);
+            target.GetComponent<Collect>().OncollectDestroy += Finish;
+        }
+        catch (MissingReferenceException)
+        {
+
+            _FSM.SetState(new NPCMoveHome(_FSM));
+        }
+       
+    }
+
+
+    public void Update()
+    {
+        Ray ray = new Ray(_FSM.NPC_Obj.transform.position, _FSM.NPC_Obj.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1, LayerMask.GetMask("Collect")))
+        {
+            // 到达目的地
+            if(hit.transform == target)
+            {
+                _FSM.NPC_Obj.meshAgent.SetDestination(_FSM.NPC_Obj.transform.position);
+                _FSM.SetState(new NPCCollect(target, _FSM));
+            }
+        }
+    }
+    // 当物资被别人采集完后
+    private void Finish(object obj, CollectEventArgs e)
+    {
+        _FSM.SetState(new NPCFindCollect(_FSM));
+    }
+}
+/// <summary>
+/// NPC往家里移动
+/// </summary>
+public class NPCMoveHome : IState
+{
+    public NPC_FSM _FSM { get; set; }
+
+    public NPCMoveHome(NPC_FSM _FSM)
+    {
+        this._FSM = _FSM;
+        _FSM.NPC_Obj.anima.Run();
+        _FSM.NPC_Obj.meshAgent.SetDestination(_FSM.NPC_Obj.commender.position);
+    }
+
+    public void Update()
+    {
+        //_FSM.NPC_Obj.transform.LookAt(new Vector3(_FSM.NPC_Obj.commender.position.x, _FSM.NPC_Obj.transform.position.y, _FSM.NPC_Obj.commender.position.z));
+        /*
+        Ray ray = new Ray(_FSM.NPC_Obj.transform.position, _FSM.NPC_Obj.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, 3, LayerMask.GetMask("House")))
+        {
+            Debug.Log(hit.collider.name);
+            // 到达目的地
+            if (hit.transform == _FSM.NPC_Obj.commender)
+            {
+                _FSM.NPC_Obj.commender.GetComponent<House>().AddCollect(_FSM.NPC_Obj.itemData.Clone());
+                _FSM.NPC_Obj.commender.GetComponent<House>().NPCQueue.Enqueue(_FSM.NPC_Obj);
+                _FSM.SetState(new NPCIdle(_FSM));
+                _FSM.NPC_Obj.gameObject.SetActive(false);
+            }
+        }
+        */
+        if(Vector3.Distance(_FSM.NPC_Obj.transform.position, _FSM.NPC_Obj.commender.position) < 5)
+        {
+            _FSM.NPC_Obj.commender.GetComponent<House>().AddCollect(_FSM.NPC_Obj.itemData.Clone());
+            _FSM.NPC_Obj.commender.GetComponent<House>().NPCQueue.Enqueue(_FSM.NPC_Obj);
+            _FSM.SetState(new NPCIdle(_FSM));
+            _FSM.NPC_Obj.gameObject.SetActive(false);
+        }
     }
 }
 
