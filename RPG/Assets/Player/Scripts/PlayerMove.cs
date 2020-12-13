@@ -11,6 +11,16 @@ public class PlayerMove : MonoBehaviour
     public float runSpeed;
     [Tooltip("无聊时间")]
     public float boringTime = 5;
+    [Tooltip("攻击点")]
+    public Transform hitPoint;
+    [Tooltip("攻击结束点")]
+    public Transform endHitPoint;
+    [Tooltip("攻击距离")]
+    public float hitDistance;
+    [Tooltip("力量")]
+    public int power;
+    [Tooltip("最大连击时间")]
+    public float doubleHitMaxTime;
     [HideInInspector]
     public float boringTimeNumber; // 感到无聊的剩余时间
     [HideInInspector]
@@ -18,23 +28,23 @@ public class PlayerMove : MonoBehaviour
 
     private Rigidbody rig;
     private PlayerAnimation playerAnimation;
+    private PlayerHit playerHit;
 
     void Start()
     {
         rig = GetComponent<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerHit = GetComponent<PlayerHit>();
         Cursor.lockState = CursorLockMode.Locked;
         boringTimeNumber = boringTime;
+
+
+        playerHit.SetPlayerHit(hitPoint.position, (endHitPoint.position - hitPoint.position).normalized, hitDistance, power, doubleHitMaxTime);
     }
 
-
-    void Update()
-    {
-
-    }
     private void FixedUpdate()
     {
-        if (isMove)
+        if (isMove && playerHit.isEndHit)
             Move();
         else
             playerAnimation.Idle();
@@ -127,5 +137,12 @@ public class PlayerMove : MonoBehaviour
         //    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, mainCamera.rotation.eulerAngles.y + 180, 0), Time.deltaTime * rotationSpeed);
         //    rig.MovePosition(transform.position + transform.forward * moveSpeed * Time.fixedDeltaTime);
         //}
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(hitPoint.position, hitPoint.position + (endHitPoint.position - hitPoint.position).normalized * hitDistance);
+
     }
 }
