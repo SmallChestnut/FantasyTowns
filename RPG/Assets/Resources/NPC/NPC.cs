@@ -390,7 +390,7 @@ public class NPCMoveHome : IState
             }
         }
         */
-        if(Vector3.Distance(_FSM.NPC_Obj.transform.position, _FSM.NPC_Obj.commender.position) < 5)
+        if(Vector3.Distance(_FSM.NPC_Obj.transform.position, _FSM.NPC_Obj.commender.position) < 8)
         {
             _FSM.NPC_Obj.commender.GetComponent<House>().AddCollect(_FSM.NPC_Obj.itemData.Clone());
             _FSM.NPC_Obj.commender.GetComponent<House>().NPCQueue.Enqueue(_FSM.NPC_Obj);

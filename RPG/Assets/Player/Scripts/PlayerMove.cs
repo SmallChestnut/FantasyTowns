@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMovePosition : MonoBehaviour
 {
     public Transform mainCamera;
     public float rotationSpeed = 5;
@@ -13,8 +13,6 @@ public class PlayerMove : MonoBehaviour
     public float boringTime = 5;
     [Tooltip("攻击点")]
     public Transform hitPoint;
-    [Tooltip("攻击结束点")]
-    public Transform endHitPoint;
     [Tooltip("攻击距离")]
     public float hitDistance;
     [Tooltip("力量")]
@@ -39,7 +37,7 @@ public class PlayerMove : MonoBehaviour
         boringTimeNumber = boringTime;
 
 
-        playerHit.SetPlayerHit(hitPoint.position, (endHitPoint.position - hitPoint.position).normalized, hitDistance, power, doubleHitMaxTime);
+        playerHit.SetPlayerHit(hitPoint, hitDistance, power, doubleHitMaxTime);
     }
 
     private void FixedUpdate()
@@ -142,7 +140,7 @@ public class PlayerMove : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(hitPoint.position, hitPoint.position + (endHitPoint.position - hitPoint.position).normalized * hitDistance);
+        Gizmos.DrawLine(hitPoint.position, hitPoint.position + transform.forward * hitDistance);
 
     }
 }
