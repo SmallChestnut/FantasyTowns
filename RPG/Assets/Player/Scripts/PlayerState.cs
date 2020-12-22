@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,10 +17,12 @@ public class PlayerState : MonoBehaviour
     public PlayerData playerData;
 
     private float timer;
+    private CinemachineCollisionImpulseSource cinemachineCollisionImpulseSource;
 
     private void Start()
     {
         playerData = new PlayerData() { life = 50, maxLife = 100, maxSatiety = 100, satiety = 100 };
+        cinemachineCollisionImpulseSource = GetComponent<CinemachineCollisionImpulseSource>();
         UpdateStateUI();
         timer = maxTime;
     }
@@ -58,6 +61,8 @@ public class PlayerState : MonoBehaviour
         playerData.life -= value;
         if (playerData.life < 0) playerData.life = 0;
         UpdateStateUI();
+        cinemachineCollisionImpulseSource.GenerateImpulse();
+
     }
     /// <summary>
     /// 添加饱食度

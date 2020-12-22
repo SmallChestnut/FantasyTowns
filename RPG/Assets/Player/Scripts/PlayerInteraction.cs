@@ -30,7 +30,12 @@ public class PlayerInteraction : MonoBehaviour
     private void Start()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
-        box.gameObject.SetActive(false);
+        StartCoroutine(CloseBox());
+    }
+    IEnumerator CloseBox()
+    {
+        yield return new WaitForSeconds(0.5f);
+        box.CloseBox();
     }
     void Update()
     {

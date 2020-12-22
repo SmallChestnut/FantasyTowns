@@ -12,12 +12,15 @@ public class EnemyCreator : MonoBehaviour
     public int monsterMin;
 
     public List<GameObject> monsterObjs;
+    private BoxCollider boxCollider;
 
     // 怪物当前数量
     private int presentMonsterNumber;
     void Start()
     {
         StartCoroutine(CreatorMonster());
+        boxCollider = GetComponent<BoxCollider>();
+        boxCollider.size = range * 2.5f;
     }
     void Update()
     {
@@ -69,5 +72,19 @@ public class EnemyCreator : MonoBehaviour
     {
         Gizmos.color = new Color(100, 0, 0, 0.3f);
         Gizmos.DrawCube(transform.position, range * 2);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            AudioManage.single.audioState = AudioState.危险地带;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            AudioManage.single.audioState = AudioState.安全地带;
+        }
     }
 }

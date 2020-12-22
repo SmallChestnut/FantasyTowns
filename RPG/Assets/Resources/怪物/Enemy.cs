@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour, ILife
             player = obj;
         }
         lifeRedImage.fillAmount = (float)lifeValue / maxLifeValue;
-        lifeImageTimer = 2; // 更新计时器
+        lifeImageTimer = 0.8f; // 更新计时器
     }
     IEnumerator ReduceLifeImage()
     {

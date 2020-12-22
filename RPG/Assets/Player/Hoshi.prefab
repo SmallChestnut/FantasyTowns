@@ -5728,7 +5728,7 @@ MonoBehaviour:
   runSpeed: 3
   boringTime: 5
   hitPoint: {fileID: 3252090839661838317}
-  hitDistance: 1.8
+  hitDistance: 2.3
   power: 15
   doubleHitMaxTime: 0.5
   boringTimeNumber: 0
@@ -5836,10 +5836,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
-    m_ImpulseChannel: 1
+    m_ImpulseChannel: -1
     m_RawSignal: {fileID: 11400000, guid: 20e46be82478fa24b90f748044c06b4b, type: 2}
     m_AmplitudeGain: 1
-    m_FrequencyGain: 1
+    m_FrequencyGain: 1.2
     m_RepeatMode: 0
     m_Randomize: 1
     m_TimeEnvelope:

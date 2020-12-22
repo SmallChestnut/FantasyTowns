@@ -6,7 +6,7 @@ public class PlayerInputManage : MonoBehaviour
 {
     public static PlayerInputManage single;
 
-    private PlayerMovePosition playerMove;
+    private PlayerMove playerMove;
     [Tooltip("玩家自由视角智能摄像机")]
     public GameObject VMcamera;
 
@@ -16,7 +16,7 @@ public class PlayerInputManage : MonoBehaviour
     }
     void Start()
     {
-        playerMove = GetComponent<PlayerMovePosition>();
+        playerMove = GetComponent<PlayerMove>();
     }
     /// <summary>
     /// 禁用玩家移动

@@ -10,6 +10,7 @@ public class PlayerHit : MonoBehaviour
     /// </summary>
     public bool isEndHit { get; private set; } = true;
 
+
     private Animator animator;
     private AnimationClip[] animationClips;
     private float hitTimer;         // 连击计时
@@ -36,7 +37,7 @@ public class PlayerHit : MonoBehaviour
         EndHitEvent.functionName = "EndAtk";
         foreach (var clip in animationClips)
         {
-            if (clip.name == "Atk1" || clip.name == "Atk2" || clip.name == "Atk3" || clip.name == "Atk4")
+            if (clip.name == "Atk1" || clip.name == "Atk3" || clip.name == "Atk4")
             {
                 startHitEvent.time = 0;                          // 在动画的开始处添加事件
                 animationEvent.time = clip.length * 0.5f;        // 在动画的70%处添加事件
@@ -44,6 +45,14 @@ public class PlayerHit : MonoBehaviour
                 clip.AddEvent(animationEvent);
                 clip.AddEvent(startHitEvent);
                 clip.AddEvent(EndHitEvent);
+               
+            }
+            else if (clip.name == "Atk2")
+            {
+                AnimationEvent animationEvent1 = new AnimationEvent();
+                animationEvent1.functionName = "PowerHit";
+                animationEvent1.time = clip.length * 0.5f;
+                clip.AddEvent(animationEvent1);
             }
         }
     }
@@ -51,6 +60,10 @@ public class PlayerHit : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        
+    }
+    private void Start()
+    {
         cinemachineCollisionImpulseSource = GetComponent<CinemachineCollisionImpulseSource>();
     }
     public void Update()
@@ -85,7 +98,24 @@ public class PlayerHit : MonoBehaviour
             hitTimer = maxTime;
         }
     }
+    private void PowerHit()
+    {
+        Ray ray = new Ray(hitPoint.position, transform.forward);
+        RaycastHit[] hits = Physics.SphereCastAll(ray, 1f, hitDistance, LayerMask.GetMask("Enemy"));
+        if (hits != null)
+        {
+            foreach (var hit in hits)
+            {
+                ILife life = hit.collider.GetComponent<ILife>();
+                if (life != null)
+                {
+                    life.Reduce(gameObject, power * 2);
+                    cinemachineCollisionImpulseSource.GenerateImpulse(new Vector3(1, 2, 0));
+                }
+            }
 
+        }
+    }
     // 攻击敌人，对敌人造成伤害
     private void Atk()
     {
@@ -114,7 +144,7 @@ public class PlayerHit : MonoBehaviour
     private void EndAtk()
     {
         isEndHit = true;
-        cinemachineCollisionImpulseSource.GenerateImpulse();
+
     }
 
 }

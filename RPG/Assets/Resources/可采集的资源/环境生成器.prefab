@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5cddbf169512a14497a812778374a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crash: {x: 50, y: 10, z: 50}
+  crash: {x: 200, y: 10, z: 200}
   wood:
     number: 300
     crashRange: 2
@@ -59,6 +59,9 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 512
+  isPut:
+    serializedVersion: 2
+    m_Bits: 32567
   woodListPosition: []
   stoneListPosition: []
   foodListPosition: []

@@ -341,8 +341,9 @@ public class NPCMoveCollect : IState
 
     public void Update()
     {
+        /*
         Ray ray = new Ray(_FSM.NPC_Obj.transform.position, _FSM.NPC_Obj.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1, LayerMask.GetMask("Collect")))
+        if (Physics.Raycast(ray, out RaycastHit hit, 2, LayerMask.GetMask("Collect")))
         {
             // 到达目的地
             if(hit.transform == target)
@@ -350,6 +351,12 @@ public class NPCMoveCollect : IState
                 _FSM.NPC_Obj.meshAgent.SetDestination(_FSM.NPC_Obj.transform.position);
                 _FSM.SetState(new NPCCollect(target, _FSM));
             }
+        }
+        */
+        if(Vector3.Distance(_FSM.NPC_Obj.transform.position, target.position) < 2)
+        {
+            _FSM.NPC_Obj.meshAgent.SetDestination(_FSM.NPC_Obj.transform.position);
+            _FSM.SetState(new NPCCollect(target, _FSM));
         }
     }
     // 当物资被别人采集完后

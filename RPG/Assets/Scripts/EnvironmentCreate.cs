@@ -24,6 +24,9 @@ public class EnvironmentCreate : MonoBehaviour
     [Header("生成射线碰撞层")]
     public LayerMask layer;
 
+    [Header("是否适合放置")]
+    public LayerMask isPut;
+
     // 用来存放各个资源的位置
     [HideInInspector]
     public List<Transform> woodListPosition = new List<Transform>();
@@ -85,76 +88,96 @@ public class EnvironmentCreate : MonoBehaviour
     }
     IEnumerator CreateWood()
     {
-        // 随机生成木头,数量要小于或等于设定的数量
-        while (woodSum <= wood.number)
+        while(true)
         {
-            Vector3 position = GetPonint(wood.crashRange);
-            if(position != Vector3.zero)
+            // 随机生成木头,数量要小于或等于设定的数量
+            while (woodSum <= wood.number)
             {
-                GameObject temp = 
-                Instantiate(woodList[UnityEngine.Random.Range(0, woodList.Count)], position, Quaternion.identity);
-                woodSum++;
-                temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
-                woodListPosition.Add(temp.transform);
-            }
+                Vector3 position = GetPonint(wood.crashRange);
+                if (position != Vector3.zero)
+                {
+                    GameObject temp =
+                    Instantiate(woodList[UnityEngine.Random.Range(0, woodList.Count)], position, Quaternion.identity);
+                    woodSum++;
+                    temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
+                    woodListPosition.Add(temp.transform);
+                }
 
+                yield return new WaitForSeconds(0.1f);
+            }
             yield return new WaitForSeconds(0.1f);
         }
+      
     }
     IEnumerator CreateFood()
     {
-        // 随机生成食物,数量要小于或等于设定的数量
-        while (foodSum <= food.number)
+        while(true)
         {
-            Vector3 position = GetPonint(food.crashRange);
-            if (position != Vector3.zero)
+            // 随机生成食物,数量要小于或等于设定的数量
+            while (foodSum <= food.number)
             {
-                GameObject temp =
-                Instantiate(foodList[UnityEngine.Random.Range(0, foodList.Count)], position, Quaternion.identity);
-                foodSum++;
-                temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
-                foodListPosition.Add(temp.transform);
-            }
+                Vector3 position = GetPonint(food.crashRange);
+                if (position != Vector3.zero)
+                {
+                    GameObject temp =
+                    Instantiate(foodList[UnityEngine.Random.Range(0, foodList.Count)], position, Quaternion.identity);
+                    foodSum++;
+                    temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
+                    foodListPosition.Add(temp.transform);
+                }
 
+                yield return new WaitForSeconds(0.1f);
+            }
             yield return new WaitForSeconds(0.1f);
         }
+      
     }
     IEnumerator CreateMedicine()
     {
-        // 随机生成草药,数量要小于或等于设定的数量
-        while (medicineSum <= medicine.number)
+        while(true)
         {
-            Vector3 position = GetPonint(medicine.crashRange);
-            if (position != Vector3.zero)
+            // 随机生成草药,数量要小于或等于设定的数量
+            while (medicineSum <= medicine.number)
             {
-                GameObject temp =
-                Instantiate(medicineList[UnityEngine.Random.Range(0, medicineList.Count)], position, Quaternion.identity);
-                medicineSum++;
-                temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
-                medicineListPosition.Add(temp.transform);
-            }
+                Vector3 position = GetPonint(medicine.crashRange);
+                if (position != Vector3.zero)
+                {
+                    GameObject temp =
+                    Instantiate(medicineList[UnityEngine.Random.Range(0, medicineList.Count)], position, Quaternion.identity);
+                    medicineSum++;
+                    temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
+                    medicineListPosition.Add(temp.transform);
+                }
 
+                yield return new WaitForSeconds(0.1f);
+            }
             yield return new WaitForSeconds(0.1f);
         }
+       
     }
     IEnumerator CreateStone()
     {
-        // 随机生成石头,数量要小于或等于设定的数量
-        while (stoneSum <= stone.number)
+        while(true)
         {
-            Vector3 position = GetPonint(stone.crashRange);
-            if (position != Vector3.zero)
+            // 随机生成石头,数量要小于或等于设定的数量
+            while (stoneSum <= stone.number)
             {
+                Vector3 position = GetPonint(stone.crashRange);
+                if (position != Vector3.zero)
+                {
 
-                //Instantiate(stoneList[UnityEngine.Random.Range(0, stoneList.Count)], position, Quaternion.identity);
-                GameObject temp = Instantiate(stoneList[0], position, Quaternion.identity);
-                stoneSum++;
-                temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
-                stoneListPosition.Add(temp.transform);
+                    //Instantiate(stoneList[UnityEngine.Random.Range(0, stoneList.Count)], position, Quaternion.identity);
+                    GameObject temp = Instantiate(stoneList[0], position, Quaternion.identity);
+                    stoneSum++;
+                    temp.GetComponent<Collect>().OncollectDestroy += OnDestroyCollect;
+                    stoneListPosition.Add(temp.transform);
+                }
+
+                yield return new WaitForSeconds(0.1f);
             }
-
             yield return new WaitForSeconds(0.1f);
         }
+       
     }
 
     private void OnDestroyCollect(object obj, CollectEventArgs e)
@@ -198,7 +221,7 @@ public class EnvironmentCreate : MonoBehaviour
         {
             #region 检查该点周围是否合适放置环境资源
             Ray ray1 = new Ray(hit.point, -Vector3.up);
-            RaycastHit[] hits = Physics.SphereCastAll(ray1, crashRange, crashRange);
+            RaycastHit[] hits = Physics.SphereCastAll(ray1, crashRange, crashRange, isPut);
             foreach(var x in hits)
             {
                 if (x.collider.tag == "Map") continue;
