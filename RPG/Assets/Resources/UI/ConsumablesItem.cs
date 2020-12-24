@@ -27,10 +27,6 @@ public class ConsumablesItem : ArticleUI, IPointerClickHandler, IPointerDownHand
             Menu.Single.AddButton(Use, "使用");
             Menu.Single.AddButton(Discard, "丢弃");
         }
-        else if(Input.GetMouseButtonUp(0))
-        {
-            Menu.Single.CloseMenu();
-        }
     }
 
     private void Use()
@@ -49,6 +45,7 @@ public class ConsumablesItem : ArticleUI, IPointerClickHandler, IPointerDownHand
         ItemData temp = itemData.Clone();
         temp.number = 1;
         box.GetItem(temp);
+        Menu.Single.CloseMenu();
     }
 
     private void Discard()

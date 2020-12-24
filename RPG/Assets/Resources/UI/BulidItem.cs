@@ -18,15 +18,12 @@ public class BulidItem : ArticleUI, IPointerClickHandler, IPointerDownHandler
                                              eventData.pointerEnter.transform.position.y));
             Menu.Single.AddButton(Discard, "丢弃");
         }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            Menu.Single.CloseMenu();
-        }
     }
 
     private void Discard()
     {
         box.GetItem(itemData);
+        Menu.Single.CloseMenu();
     }
 
     public void OnPointerDown(PointerEventData eventData)

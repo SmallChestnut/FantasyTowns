@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca3363c74c2d374ca20c93fde9f4c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: {x: 30, y: 10, z: 30}
+  range: {x: 85.9, y: 10, z: 100}
   monsterNumber: 10
-  monsterMin: 8
+  monsterMin: 5
   monsterObjs:
   - {fileID: 5005178754736666127, guid: 0b9c8287cf55ad14b8dac6603bc1129f, type: 3}
   - {fileID: 8678808117944172703, guid: 028aa6034481ad740bb2d19aa0c471dc, type: 3}
