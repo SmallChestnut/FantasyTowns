@@ -7,6 +7,7 @@ public class ResourcePath
     public static ResourcePath Single { get; } = new ResourcePath();
 
     public Dictionary<string, GameObject> articleUIs = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> house = new Dictionary<string, GameObject>();
     public List<GameObject> NPCList = new List<GameObject>();
 
     public GameObject universalSlider = Resources.Load("UI\\进度条") as GameObject;
@@ -47,19 +48,44 @@ public class ResourcePath
     public GameObject NPC3 = Resources.Load("NPC\\NPC3") as GameObject;
     public GameObject NPC4 = Resources.Load("NPC\\NPC4") as GameObject;
     public GameObject NPC5 = Resources.Load("NPC\\NPC5") as GameObject;
+    public GameObject foodHouse = Resources.Load("房子\\食物采集小屋") as GameObject;
+    public GameObject woodHouse = Resources.Load("房子\\伐木小屋") as GameObject;
+    public GameObject stoneHouse = Resources.Load("房子\\矿物采集小屋") as GameObject;
+    public GameObject medicineHouse = Resources.Load("房子\\药材采集小屋") as GameObject;
+    public GameObject dwellingHouse = Resources.Load("房子\\住宅小屋") as GameObject;
+    public GameObject foodHouseTemplate = Resources.Load("房子\\食物采集小屋(模版)") as GameObject;
+    public GameObject woodHouseTemplate = Resources.Load("房子\\伐木小屋(模版)") as GameObject;
+    public GameObject stoneHouseTemplate = Resources.Load("房子\\矿物采集小屋(模版)") as GameObject;
+    public GameObject medicineHouseTemplate = Resources.Load("房子\\药材采集小屋(模版)") as GameObject;
+    public GameObject dwellingHouseTemplate = Resources.Load("房子\\住宅小屋(模版)") as GameObject;
 
 
     private ResourcePath()
     {
+        #region 背包物品的UI字典初始化
         articleUIs.Add(wood.GetComponent<ArticleUI>().itemData.name, wood);
         articleUIs.Add(stone.GetComponent<ArticleUI>().itemData.name, stone);
         articleUIs.Add(food.GetComponent<ArticleUI>().itemData.name, food);
         articleUIs.Add(medicine.GetComponent<ArticleUI>().itemData.name, medicine);
-
+        #endregion
+        #region 各类NPC列表初始化
         NPCList.Add(NPC1);
         NPCList.Add(NPC2);
         NPCList.Add(NPC3);
         NPCList.Add(NPC4);
         NPCList.Add(NPC5);
+        #endregion
+        #region 各类房子的字典初始化
+        house.Add("食物采集小屋", foodHouse);
+        house.Add("伐木小屋", woodHouse);
+        house.Add("矿物采集小屋", stoneHouse);
+        house.Add("房子药材采集小屋", medicineHouse);
+        house.Add("住宅小屋", dwellingHouse);
+        house.Add("食物采集小屋(模版)", foodHouseTemplate);
+        house.Add("伐木小屋(模版)", woodHouseTemplate);
+        house.Add("矿物采集小屋(模版)", stoneHouseTemplate);
+        house.Add("药材采集小屋(模版)", medicineHouseTemplate);
+        house.Add("住宅小屋(模版)", dwellingHouseTemplate);
+        #endregion
     }
 }

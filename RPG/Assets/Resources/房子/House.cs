@@ -13,7 +13,8 @@ public class House : MonoBehaviour
     public int NPCNumber;
     [Tooltip("是否是采集小屋")]
     public bool isCollectHouse;
-
+    [Tooltip("房子的名字")]
+    public string houseName;
 
 
     public Queue<NPC> NPCQueue = new Queue<NPC>();
@@ -23,6 +24,7 @@ public class House : MonoBehaviour
     private ItemData warehouse;                         // 仓库，存放资源
     private bool isUpdateUI;                            // 是否刷新UI
     private PlayerInteraction playerInteraction;
+    private HouseData houseData;
     #region 菜单UI
     [HideInInspector]
     public Transform houseMenu;                        // 房子的操作菜单UI
@@ -82,6 +84,8 @@ public class House : MonoBehaviour
             temp.gameObject.SetActive(false);
             NPCQueue.Enqueue(temp);
         }
+        houseData = new HouseData() { itemData = warehouse, name = houseName, position = transform.position, rotation = transform.rotation, _NPC = NPCNumber };
+        GameSave.Single.gameData.houseDatas.Add(houseData);
     }
     private void Update()
     {
@@ -89,6 +93,8 @@ public class House : MonoBehaviour
         {
             UpdateUI();
         }
+        // 每帧更新NPC的数量
+        houseData._NPC = NPCNumber;
     }
     /// <summary>
     /// 将资源添加到仓库里，如果资源类型不对会直接丢弃
@@ -126,6 +132,7 @@ public class House : MonoBehaviour
                     NPC npc = NPCQueue.Dequeue();
                     playerInteraction.NPCQueue.Enqueue(npc);
                     NPCDebt--;
+                    NPCNumber--;
                 }
                 // 否则就指挥NPC进行采集
                 else if (isCollect && isCollectHouse)
@@ -233,6 +240,7 @@ public class House : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 NPCQueue.Enqueue(playerInteraction.NPCQueue.Dequeue());
+                NPCNumber++;
             }
         }
     }

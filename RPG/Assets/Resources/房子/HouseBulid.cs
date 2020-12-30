@@ -13,6 +13,8 @@ public class HouseBulid : MonoBehaviour, IBulid
     public ItemData wood;
     [Tooltip("忽略的图层")]
     public LayerMask layer;
+    [Tooltip("房子名字")]
+    public string houseName;
     [Header("有多个模型数据的才手动添加")]
     public List<MeshRenderer> meshRenderers;
 
@@ -20,6 +22,7 @@ public class HouseBulid : MonoBehaviour, IBulid
     private Text stoneText;
     private Text woodText;
     private List<Material> materials = new List<Material>();
+    private HouseTemplateData houseTemplate;
     /// <summary>
     /// 是否可以建造该房子
     /// </summary>
@@ -101,5 +104,18 @@ public class HouseBulid : MonoBehaviour, IBulid
     public void DestroyHouse()
     {
         Destroy(gameObject);
+    }
+    private void OnDestroy()
+    {
+        if(houseTemplate != null)
+        {
+            GameSave.Single.gameData.houseTemplateDatas.Remove(houseTemplate);
+        }
+    }
+
+    public void InitHouseData()
+    {
+        houseTemplate = new HouseTemplateData() { name = houseName, position = transform.position, rotation = transform.rotation };
+        GameSave.Single.gameData.houseTemplateDatas.Add(houseTemplate);
     }
 }

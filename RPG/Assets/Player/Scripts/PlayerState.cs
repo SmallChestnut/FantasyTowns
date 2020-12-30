@@ -21,7 +21,7 @@ public class PlayerState : MonoBehaviour
 
     private void Start()
     {
-        playerData = new PlayerData() { life = 50, maxLife = 100, maxSatiety = 100, satiety = 100 };
+        playerData = new PlayerData() { life = 50, maxLife = 80, maxSatiety = 100, satiety = 100};
         cinemachineCollisionImpulseSource = GetComponent<CinemachineCollisionImpulseSource>();
         UpdateStateUI();
         timer = maxTime;
@@ -102,15 +102,4 @@ public class PlayerState : MonoBehaviour
     }
 
 
-}
-
-/// <summary>
-/// 玩家的数据
-/// </summary>
-public class PlayerData
-{
-    public int life;        // 生命值
-    public int satiety;     // 饱食度
-    public int maxLife;     // 最大生命值
-    public int maxSatiety;  // 最大饱食度
 }

@@ -55,6 +55,8 @@ public class PlayerBulid : MonoBehaviour
             // 判断是否满足建造要求
             if (bulidTemplet.GetComponent<HouseBulid>().IsBulid)
             {
+                HouseBulid houseBulid = bulidTemplet.GetComponent<HouseBulid>();
+                houseBulid.InitHouseData();
                 CloseBulid();
             }
         }
