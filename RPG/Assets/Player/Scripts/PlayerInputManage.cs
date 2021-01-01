@@ -39,6 +39,7 @@ public class PlayerInputManage : MonoBehaviour
     public void ForbidVMCamera()
     {
         VMcamera.SetActive(false);
+        Cursor.visible = true;
     }
     /// <summary>
     /// 启用玩家视角控制
@@ -46,6 +47,7 @@ public class PlayerInputManage : MonoBehaviour
     public void MayVMCamera()
     {
         VMcamera.SetActive(true);
+        Cursor.visible = false;
     }
 
     

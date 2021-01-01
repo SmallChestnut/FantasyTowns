@@ -703,7 +703,7 @@ GameObject:
   - component: {fileID: 410943515160010989}
   - component: {fileID: 5020851516859469408}
   m_Layer: 10
-  m_Name: "\u6218\u6597\u5C0F\u5C4B(\u6A21\u7248)"
+  m_Name: "\u836F\u6750\u91C7\u96C6\u5C0F\u5C4B(\u6A21\u7248)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -828,6 +828,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 1024
+  houseName: "\u836F\u6750\u91C7\u96C6\u5C0F\u5C4B(\u6A21\u7248)"
   meshRenderers: []
 --- !u!1 &5354516496109387752
 GameObject:

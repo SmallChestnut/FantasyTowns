@@ -18,10 +18,12 @@ public class House : MonoBehaviour
 
 
     public Queue<NPC> NPCQueue = new Queue<NPC>();
+    [HideInInspector]
+    public ItemData warehouse;                          // 仓库，存放资源
     private EnvironmentCreate environmentCreate;        // 记录离房子最近的资源区域
     private Transform birthPoint;                       // NPC出生点
     private int NPCDebt;                                // 记录需要取出多少NPC
-    private ItemData warehouse;                         // 仓库，存放资源
+
     private bool isUpdateUI;                            // 是否刷新UI
     private PlayerInteraction playerInteraction;
     private HouseData houseData;
@@ -73,7 +75,8 @@ public class House : MonoBehaviour
         playerInteraction = PlayerInputManage.single.GetComponent<PlayerInteraction>();
         isCollect = true;
         birthPoint = transform.Find("NPC生成点");
-        warehouse = new ItemData() { name = collectType.ToString(), number = 0 };
+        if(warehouse == null)
+            warehouse = new ItemData() { name = collectType.ToString(), number = 0 };
 
         StartCoroutine(Dispatch());
         // 生成NPC
@@ -133,6 +136,7 @@ public class House : MonoBehaviour
                     playerInteraction.NPCQueue.Enqueue(npc);
                     NPCDebt--;
                     NPCNumber--;
+                     houseData._NPC = NPCNumber;
                 }
                 // 否则就指挥NPC进行采集
                 else if (isCollect && isCollectHouse)
@@ -241,6 +245,7 @@ public class House : MonoBehaviour
             {
                 NPCQueue.Enqueue(playerInteraction.NPCQueue.Dequeue());
                 NPCNumber++;
+                houseData._NPC = NPCNumber;
             }
         }
     }

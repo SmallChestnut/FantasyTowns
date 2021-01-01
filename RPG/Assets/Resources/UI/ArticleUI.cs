@@ -44,7 +44,7 @@ public class ArticleUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GameObject.Find("Canvas").transform;
         Number = itemData.number;
-        box = transform.parent.parent.parent.GetComponent<Box>();
+        box = canvas.transform.Find("背包").GetComponent<Box>();
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -82,7 +82,7 @@ public class ArticleUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// <param name="gridUI">替换的目标格子</param>
     public void ChangeGrid(GridUI gridUI)
     {
-        (transform as RectTransform).position = gridUI.rectTransform.position;
+        (transform as RectTransform).position = gridUI.GetComponent<RectTransform>().position;
         transform.SetParent(gridUI.transform);
         gridUI.Article = this;
         ArticleGrid = gridUI;
@@ -99,7 +99,7 @@ public enum ArticleType
 
 public class Menu
 {
-    public static Menu Single { get; } = new Menu();
+    public static Menu Single { get; set; } = new Menu();
 
     public GameObject menu;
     public List<GameObject> buttons = new List<GameObject>();
@@ -151,7 +151,16 @@ public class Menu
     /// </summary>
     public void CloseMenu()
     {
-        menu.SetActive(false);
+        try
+        {
+            menu.SetActive(false);
+        }
+        catch (MissingReferenceException)
+        {
+
+            Single = new Menu();
+        }
+       
         RemoveAllButton();
     }
 }

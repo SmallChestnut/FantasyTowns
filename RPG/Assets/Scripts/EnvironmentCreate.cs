@@ -24,7 +24,7 @@ public class EnvironmentCreate : MonoBehaviour
     [Header("生成射线碰撞层")]
     public LayerMask layer;
 
-    [Header("是否适合放置")]
+    [Header("检查不适合放置的图层")]
     public LayerMask isPut;
 
     // 用来存放各个资源的位置
@@ -221,7 +221,7 @@ public class EnvironmentCreate : MonoBehaviour
         {
             #region 检查该点周围是否合适放置环境资源
             Ray ray1 = new Ray(hit.point, -Vector3.up);
-            RaycastHit[] hits = Physics.SphereCastAll(ray1, crashRange, crashRange, isPut);
+            RaycastHit[] hits = Physics.SphereCastAll(ray1, crashRange, crashRange * 2, isPut);
             foreach(var x in hits)
             {
                 if (x.collider.tag == "Map") continue;

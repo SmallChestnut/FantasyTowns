@@ -353,11 +353,20 @@ public class NPCMoveCollect : IState
             }
         }
         */
-        if(Vector3.Distance(_FSM.NPC_Obj.transform.position, target.position) < 2)
+        try
         {
-            _FSM.NPC_Obj.meshAgent.SetDestination(_FSM.NPC_Obj.transform.position);
-            _FSM.SetState(new NPCCollect(target, _FSM));
+            if (Vector3.Distance(_FSM.NPC_Obj.transform.position, target.position) < 2)
+            {
+                _FSM.NPC_Obj.meshAgent.SetDestination(_FSM.NPC_Obj.transform.position);
+                _FSM.SetState(new NPCCollect(target, _FSM));
+            }
         }
+        catch (System.Exception)
+        {
+
+            return;
+        }
+       
     }
     // 当物资被别人采集完后
     private void Finish(object obj, CollectEventArgs e)

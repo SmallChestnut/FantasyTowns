@@ -34,6 +34,7 @@ public class PlayerMove : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerHit = GetComponent<PlayerHit>();
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         boringTimeNumber = boringTime;
 
 

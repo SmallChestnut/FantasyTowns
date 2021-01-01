@@ -21,7 +21,15 @@ public class PlayerState : MonoBehaviour
 
     private void Start()
     {
-        playerData = new PlayerData() { life = 50, maxLife = 80, maxSatiety = 100, satiety = 100};
+        playerData = GameSave.Single.gameData.playerData;
+        // 生成NPC
+        for (int i = 0; i < playerData._NPC; i++)
+        {
+            NPC temp = Instantiate(ResourcePath.Single.NPCList[
+                                Random.Range(0, ResourcePath.Single.NPCList.Count)]).GetComponent<NPC>();
+            temp.gameObject.SetActive(false);
+            PlayerInputManage.single.GetComponent<PlayerInteraction>().NPCQueue.Enqueue(temp);
+        }
         cinemachineCollisionImpulseSource = GetComponent<CinemachineCollisionImpulseSource>();
         UpdateStateUI();
         timer = maxTime;

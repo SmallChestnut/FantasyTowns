@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class HintMessage
 {
-    public static HintMessage Single { get; } = new HintMessage();
+    public static HintMessage Single { get; set; } = new HintMessage();
 
     private Text textMessage;
     private GameObject messageObj;
-    private HintMessage()
+    public HintMessage()
     {
         messageObj = Object.Instantiate(ResourcePath.Single.universalHintMessage,
                      GameObject.Find("Canvas").transform);
@@ -22,6 +22,18 @@ public class HintMessage
         textMessage.text = messageText;
         messageObj.SetActive(true);
     }
-    public void CloseMessageText() => messageObj.SetActive(false);
+    public void CloseMessageText()
+    {
+        try
+        {
+            messageObj.SetActive(false);
+        }
+        catch (MissingReferenceException)
+        {
+
+            Single = new HintMessage();
+        }
+        
+    }
 }
 

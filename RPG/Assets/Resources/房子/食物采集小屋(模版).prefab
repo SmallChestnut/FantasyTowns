@@ -134,6 +134,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 512
+  houseName: "\u98DF\u7269\u91C7\u96C6\u5C0F\u5C4B(\u6A21\u7248)"
   meshRenderers:
   - {fileID: 5429641444644760915}
   - {fileID: 5429641444644760917}

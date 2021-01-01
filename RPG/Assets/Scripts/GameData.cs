@@ -6,7 +6,7 @@ public class GameData
 {
     public List<HouseData> houseDatas = new List<HouseData>();
     public List<HouseTemplateData> houseTemplateDatas = new List<HouseTemplateData>();
-    public PlayerData playerData;
+    public PlayerData playerData = new PlayerData() { life = 50, maxLife = 100, maxSatiety = 100, satiety = 100 };
 }
 
 /// <summary>

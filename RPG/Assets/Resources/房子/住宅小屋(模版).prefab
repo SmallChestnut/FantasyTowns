@@ -6005,6 +6005,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 512
+  houseName: "\u4F4F\u5B85\u5C0F\u5C4B(\u6A21\u7248)"
   meshRenderers: []
 --- !u!1 &4280984806826135811
 GameObject:

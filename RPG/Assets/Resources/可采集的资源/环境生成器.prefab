@@ -46,7 +46,7 @@ MonoBehaviour:
   crash: {x: 454.7, y: 10, z: 450}
   wood:
     number: 600
-    crashRange: 2
+    crashRange: 3
   stone:
     number: 300
     crashRange: 5
@@ -61,7 +61,7 @@ MonoBehaviour:
     m_Bits: 512
   isPut:
     serializedVersion: 2
-    m_Bits: 32567
+    m_Bits: 4294967295
   woodListPosition: []
   stoneListPosition: []
   foodListPosition: []

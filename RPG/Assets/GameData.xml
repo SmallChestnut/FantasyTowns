@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<GameData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <houseDatas />
+  <houseTemplateDatas />
+  <playerData>
+    <life>50</life>
+    <satiety>98</satiety>
+    <maxLife>100</maxLife>
+    <maxSatiety>100</maxSatiety>
+    <_NPC>0</_NPC>
+    <position>
+      <x>161.109879</x>
+      <y>0.7020626</y>
+      <z>134.878387</z>
+    </position>
+    <rotation>
+      <x>0</x>
+      <y>0.20379366</y>
+      <z>0</z>
+      <w>0.9790139</w>
+      <eulerAngles>
+        <x>-0</x>
+        <y>23.5177784</y>
+        <z>0</z>
+      </eulerAngles>
+    </rotation>
+    <itemDatas>
+      <ItemData>
+        <name>木头</name>
+        <number>15</number>
+      </ItemData>
+    </itemDatas>
+  </playerData>
+</GameData>

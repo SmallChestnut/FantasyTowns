@@ -1186,6 +1186,10 @@ MonoBehaviour:
   isCollect: 0
   NPCNumber: 5
   isCollectHouse: 0
+  houseName: "\u4F4F\u5B85\u5C0F\u5C4B"
+  warehouse:
+    name: 
+    number: 1
   houseMenu: {fileID: 0}
 --- !u!208 &8721200985250875761
 NavMeshObstacle:

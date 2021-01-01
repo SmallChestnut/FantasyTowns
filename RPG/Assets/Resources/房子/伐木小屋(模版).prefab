@@ -902,6 +902,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 512
+  houseName: "\u4F10\u6728\u5C0F\u5C4B(\u6A21\u7248)"
   meshRenderers: []
 --- !u!54 &-4330432046294815946
 Rigidbody:

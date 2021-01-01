@@ -776,6 +776,10 @@ MonoBehaviour:
   isCollect: 1
   NPCNumber: 0
   isCollectHouse: 1
+  houseName: "\u836F\u6750\u91C7\u96C6\u5C0F\u5C4B"
+  warehouse:
+    name: 
+    number: 1
   houseMenu: {fileID: 0}
 --- !u!1 &3868737676360935999
 GameObject:
